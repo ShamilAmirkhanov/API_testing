@@ -1,0 +1,763 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 6.0.2 (Python 3.8.0 on linux)" generated="20230208 12:24:45.516" rpa="false" schemaversion="3">
+<suite id="s1" name="API testing" source="/home/shamil/PycharmProjects/API_testing">
+<suite id="s1-s1" name="ApiTesting" source="/home/shamil/PycharmProjects/API_testing/ApiTesting.robot">
+<test id="s1-s1-t1" name="Scenario 1" line="10">
+<kw name="Create Session" library="RequestsLibrary">
+<arg>mysession</arg>
+<arg>https://reqres.in</arg>
+<arg>verify=true</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20230208 12:24:45.701" level="INFO">Creating Session using : alias=mysession, url=https://reqres.in, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=True,                     debug=0 </msg>
+<status status="PASS" starttime="20230208 12:24:45.701" endtime="20230208 12:24:45.702"/>
+</kw>
+<kw name="GET On Session" library="RequestsLibrary">
+<var>${response}</var>
+<arg>mysession</arg>
+<arg>/api/users</arg>
+<arg>params=page=1</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<msg timestamp="20230208 12:24:45.928" level="INFO">GET Request : url=https://reqres.in/api/users?page=1 
+ path_url=/api/users?page=1 
+ headers={'User-Agent': 'python-requests/2.28.2', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg timestamp="20230208 12:24:45.928" level="INFO">GET Response : url=https://reqres.in/api/users?page=1 
+ status=200, reason=OK 
+ headers={'Date': 'Wed, 08 Feb 2023 08:24:45 GMT', 'Content-Type': 'application/json; charset=utf-8', 'Transfer-Encoding': 'chunked', 'Connection': 'keep-alive', 'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Etag': 'W/"3e4-2RLXvr5wTg9YQ6aH95CkYoFNuO8"', 'Via': '1.1 vegur', 'Cache-Control': 'max-age=14400', 'CF-Cache-Status': 'HIT', 'Age': '6832', 'Report-To': '{"endpoints":[{"url":"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=6VQ%2FXHOXT4OsxQYzBvyFOeKZLWhnn8p%2BBNjQtsSqb7mH3htjgVGI0wB9A40D%2F9eYqJQqH5iMlLqitoHvR4CZwdzdlPERd%2Fq%2BSIt%2BgIuTI2jKI4mrG1cBge7%2FeQ%3D%3D"}],"group":"cf-nel","max_age":604800}', 'NEL': '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}', 'Vary': 'Accept-Encoding', 'Server': 'cloudflare', 'CF-RAY': '7962f886cb3d90f4-FRA', 'Content-Encoding': 'gzip'} 
+ body={"page":1,"per_page":6,"total":12,"total_pages":2,"data":[{"id":1,"email":"george.bluth@reqres.in","first_name":"George","last_name":"Bluth","avatar":"https://reqres.in/img/faces/1-image.jpg"},{"id":2,"email":"janet.weaver@reqres.in","first_name":"Janet","last_name":"Weaver","avatar":"https://reqres.in/img/faces/2-image.jpg"},{"id":3,"email":"emma.wong@reqres.in","first_name":"Emma","last_name":"Wong","avatar":"https://reqres.in/img/faces/3-image.jpg"},{"id":4,"email":"eve.holt@reqres.in","first_name":"Eve","last_name":"Holt","avatar":"https://reqres.in/img/faces/4-image.jpg"},{"id":5,"email":"charles.morris@reqres.in","first_name":"Charles","last_name":"Morris","avatar":"https://reqres.in/img/faces/5-image.jpg"},{"id":6,"email":"tracey.ramos@reqres.in","first_name":"Tracey","last_name":"Ramos","avatar":"https://reqres.in/img/faces/6-image.jpg"}],"support":{"url":"https://reqres.in/#support-heading","text":"To keep ReqRes free, contributions towards server costs are appreciated!"}} 
+ </msg>
+<msg timestamp="20230208 12:24:45.929" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230208 12:24:45.702" endtime="20230208 12:24:45.929"/>
+</kw>
+<kw name="Status Should Be" library="RequestsLibrary">
+<arg>200</arg>
+<arg>${response}</arg>
+<doc>Fails if response status code is different than the expected.</doc>
+<status status="PASS" starttime="20230208 12:24:45.930" endtime="20230208 12:24:45.930"/>
+</kw>
+<kw name="Get Value From Json" library="JSONLibrary">
+<var>${per_page}</var>
+<arg>${response.json()}</arg>
+<arg>per_page</arg>
+<doc>Get Value From JSON using JSONPath</doc>
+<msg timestamp="20230208 12:24:45.978" level="INFO">${per_page} = [6]</msg>
+<status status="PASS" starttime="20230208 12:24:45.931" endtime="20230208 12:24:45.978"/>
+</kw>
+<kw name="Get From List" library="Collections">
+<var>${per_pageFromList}</var>
+<arg>${per_page}</arg>
+<arg>0</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<msg timestamp="20230208 12:24:45.978" level="INFO">${per_pageFromList} = 6</msg>
+<status status="PASS" starttime="20230208 12:24:45.978" endtime="20230208 12:24:45.978"/>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>${per_pageFromList}</arg>
+<arg>${6}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" starttime="20230208 12:24:45.978" endtime="20230208 12:24:45.979"/>
+</kw>
+<kw name="Get Value From Json" library="JSONLibrary">
+<var>${page}</var>
+<arg>${response.json()}</arg>
+<arg>page</arg>
+<doc>Get Value From JSON using JSONPath</doc>
+<msg timestamp="20230208 12:24:45.995" level="INFO">${page} = [1]</msg>
+<status status="PASS" starttime="20230208 12:24:45.979" endtime="20230208 12:24:45.995"/>
+</kw>
+<kw name="Get From List" library="Collections">
+<var>${pageFromList}</var>
+<arg>${page}</arg>
+<arg>0</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<msg timestamp="20230208 12:24:45.995" level="INFO">${pageFromList} = 1</msg>
+<status status="PASS" starttime="20230208 12:24:45.995" endtime="20230208 12:24:45.995"/>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>${pageFromList}</arg>
+<arg>${1}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" starttime="20230208 12:24:45.995" endtime="20230208 12:24:45.996"/>
+</kw>
+<for flavor="IN">
+<var>${user}</var>
+<value>@{response.json()['data']}</value>
+<iter>
+<var name="${user}">{'id': 1, 'email': 'george.bluth@reqres.in', 'first_name': 'George', 'last_name': 'Bluth', 'avatar': 'https://reqres.in/img/faces/1-image.jpg'}</var>
+<kw name="Convert To String" library="BuiltIn">
+<var>${email}</var>
+<arg>${user['email']}</arg>
+<doc>Converts the given item to a Unicode string.</doc>
+<msg timestamp="20230208 12:24:45.997" level="INFO">${email} = george.bluth@reqres.in</msg>
+<status status="PASS" starttime="20230208 12:24:45.997" endtime="20230208 12:24:45.997"/>
+</kw>
+<kw name="Convert To String" library="BuiltIn">
+<var>${first_name}</var>
+<arg>${user['first_name']}</arg>
+<doc>Converts the given item to a Unicode string.</doc>
+<msg timestamp="20230208 12:24:45.998" level="INFO">${first_name} = George</msg>
+<status status="PASS" starttime="20230208 12:24:45.997" endtime="20230208 12:24:45.998"/>
+</kw>
+<kw name="Convert To String" library="BuiltIn">
+<var>${last_name}</var>
+<arg>${user['last_name']}</arg>
+<doc>Converts the given item to a Unicode string.</doc>
+<msg timestamp="20230208 12:24:45.998" level="INFO">${last_name} = Bluth</msg>
+<status status="PASS" starttime="20230208 12:24:45.998" endtime="20230208 12:24:45.998"/>
+</kw>
+<kw name="Convert To String" library="BuiltIn">
+<var>${avatar}</var>
+<arg>${user['avatar']}</arg>
+<doc>Converts the given item to a Unicode string.</doc>
+<msg timestamp="20230208 12:24:45.999" level="INFO">${avatar} = https://reqres.in/img/faces/1-image.jpg</msg>
+<status status="PASS" starttime="20230208 12:24:45.998" endtime="20230208 12:24:45.999"/>
+</kw>
+<if>
+<branch type="IF" condition="$email == &quot;janet.weaver@reqres.in&quot; and $first_name == &quot;Janet&quot; and $last_name == &quot;Weaver&quot; and $avatar == &quot;https://reqres.in/img/faces/2-image.jpg&quot;">
+<kw name="Log To Console" library="BuiltIn">
+<arg>"User with the necessary information exists"</arg>
+<arg>BREAK</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="NOT RUN" starttime="20230208 12:24:46.001" endtime="20230208 12:24:46.001"/>
+</kw>
+<status status="NOT RUN" starttime="20230208 12:24:45.999" endtime="20230208 12:24:46.001"/>
+</branch>
+<status status="PASS" starttime="20230208 12:24:45.999" endtime="20230208 12:24:46.001"/>
+</if>
+<status status="PASS" starttime="20230208 12:24:45.996" endtime="20230208 12:24:46.001"/>
+</iter>
+<iter>
+<var name="${user}">{'id': 2, 'email': 'janet.weaver@reqres.in', 'first_name': 'Janet', 'last_name': 'Weaver', 'avatar': 'https://reqres.in/img/faces/2-image.jpg'}</var>
+<kw name="Convert To String" library="BuiltIn">
+<var>${email}</var>
+<arg>${user['email']}</arg>
+<doc>Converts the given item to a Unicode string.</doc>
+<msg timestamp="20230208 12:24:46.002" level="INFO">${email} = janet.weaver@reqres.in</msg>
+<status status="PASS" starttime="20230208 12:24:46.002" endtime="20230208 12:24:46.002"/>
+</kw>
+<kw name="Convert To String" library="BuiltIn">
+<var>${first_name}</var>
+<arg>${user['first_name']}</arg>
+<doc>Converts the given item to a Unicode string.</doc>
+<msg timestamp="20230208 12:24:46.003" level="INFO">${first_name} = Janet</msg>
+<status status="PASS" starttime="20230208 12:24:46.002" endtime="20230208 12:24:46.003"/>
+</kw>
+<kw name="Convert To String" library="BuiltIn">
+<var>${last_name}</var>
+<arg>${user['last_name']}</arg>
+<doc>Converts the given item to a Unicode string.</doc>
+<msg timestamp="20230208 12:24:46.003" level="INFO">${last_name} = Weaver</msg>
+<status status="PASS" starttime="20230208 12:24:46.003" endtime="20230208 12:24:46.003"/>
+</kw>
+<kw name="Convert To String" library="BuiltIn">
+<var>${avatar}</var>
+<arg>${user['avatar']}</arg>
+<doc>Converts the given item to a Unicode string.</doc>
+<msg timestamp="20230208 12:24:46.004" level="INFO">${avatar} = https://reqres.in/img/faces/2-image.jpg</msg>
+<status status="PASS" starttime="20230208 12:24:46.004" endtime="20230208 12:24:46.004"/>
+</kw>
+<if>
+<branch type="IF" condition="$email == &quot;janet.weaver@reqres.in&quot; and $first_name == &quot;Janet&quot; and $last_name == &quot;Weaver&quot; and $avatar == &quot;https://reqres.in/img/faces/2-image.jpg&quot;">
+<kw name="Log To Console" library="BuiltIn">
+<arg>"User with the necessary information exists"</arg>
+<arg>BREAK</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20230208 12:24:46.004" endtime="20230208 12:24:46.005"/>
+</kw>
+<status status="PASS" starttime="20230208 12:24:46.004" endtime="20230208 12:24:46.005"/>
+</branch>
+<status status="PASS" starttime="20230208 12:24:46.004" endtime="20230208 12:24:46.005"/>
+</if>
+<status status="PASS" starttime="20230208 12:24:46.001" endtime="20230208 12:24:46.005"/>
+</iter>
+<iter>
+<var name="${user}">{'id': 3, 'email': 'emma.wong@reqres.in', 'first_name': 'Emma', 'last_name': 'Wong', 'avatar': 'https://reqres.in/img/faces/3-image.jpg'}</var>
+<kw name="Convert To String" library="BuiltIn">
+<var>${email}</var>
+<arg>${user['email']}</arg>
+<doc>Converts the given item to a Unicode string.</doc>
+<msg timestamp="20230208 12:24:46.005" level="INFO">${email} = emma.wong@reqres.in</msg>
+<status status="PASS" starttime="20230208 12:24:46.005" endtime="20230208 12:24:46.005"/>
+</kw>
+<kw name="Convert To String" library="BuiltIn">
+<var>${first_name}</var>
+<arg>${user['first_name']}</arg>
+<doc>Converts the given item to a Unicode string.</doc>
+<msg timestamp="20230208 12:24:46.006" level="INFO">${first_name} = Emma</msg>
+<status status="PASS" starttime="20230208 12:24:46.005" endtime="20230208 12:24:46.006"/>
+</kw>
+<kw name="Convert To String" library="BuiltIn">
+<var>${last_name}</var>
+<arg>${user['last_name']}</arg>
+<doc>Converts the given item to a Unicode string.</doc>
+<msg timestamp="20230208 12:24:46.006" level="INFO">${last_name} = Wong</msg>
+<status status="PASS" starttime="20230208 12:24:46.006" endtime="20230208 12:24:46.006"/>
+</kw>
+<kw name="Convert To String" library="BuiltIn">
+<var>${avatar}</var>
+<arg>${user['avatar']}</arg>
+<doc>Converts the given item to a Unicode string.</doc>
+<msg timestamp="20230208 12:24:46.007" level="INFO">${avatar} = https://reqres.in/img/faces/3-image.jpg</msg>
+<status status="PASS" starttime="20230208 12:24:46.007" endtime="20230208 12:24:46.007"/>
+</kw>
+<if>
+<branch type="IF" condition="$email == &quot;janet.weaver@reqres.in&quot; and $first_name == &quot;Janet&quot; and $last_name == &quot;Weaver&quot; and $avatar == &quot;https://reqres.in/img/faces/2-image.jpg&quot;">
+<kw name="Log To Console" library="BuiltIn">
+<arg>"User with the necessary information exists"</arg>
+<arg>BREAK</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="NOT RUN" starttime="20230208 12:24:46.007" endtime="20230208 12:24:46.007"/>
+</kw>
+<status status="NOT RUN" starttime="20230208 12:24:46.007" endtime="20230208 12:24:46.007"/>
+</branch>
+<status status="PASS" starttime="20230208 12:24:46.007" endtime="20230208 12:24:46.007"/>
+</if>
+<status status="PASS" starttime="20230208 12:24:46.005" endtime="20230208 12:24:46.008"/>
+</iter>
+<iter>
+<var name="${user}">{'id': 4, 'email': 'eve.holt@reqres.in', 'first_name': 'Eve', 'last_name': 'Holt', 'avatar': 'https://reqres.in/img/faces/4-image.jpg'}</var>
+<kw name="Convert To String" library="BuiltIn">
+<var>${email}</var>
+<arg>${user['email']}</arg>
+<doc>Converts the given item to a Unicode string.</doc>
+<msg timestamp="20230208 12:24:46.008" level="INFO">${email} = eve.holt@reqres.in</msg>
+<status status="PASS" starttime="20230208 12:24:46.008" endtime="20230208 12:24:46.008"/>
+</kw>
+<kw name="Convert To String" library="BuiltIn">
+<var>${first_name}</var>
+<arg>${user['first_name']}</arg>
+<doc>Converts the given item to a Unicode string.</doc>
+<msg timestamp="20230208 12:24:46.009" level="INFO">${first_name} = Eve</msg>
+<status status="PASS" starttime="20230208 12:24:46.008" endtime="20230208 12:24:46.009"/>
+</kw>
+<kw name="Convert To String" library="BuiltIn">
+<var>${last_name}</var>
+<arg>${user['last_name']}</arg>
+<doc>Converts the given item to a Unicode string.</doc>
+<msg timestamp="20230208 12:24:46.009" level="INFO">${last_name} = Holt</msg>
+<status status="PASS" starttime="20230208 12:24:46.009" endtime="20230208 12:24:46.009"/>
+</kw>
+<kw name="Convert To String" library="BuiltIn">
+<var>${avatar}</var>
+<arg>${user['avatar']}</arg>
+<doc>Converts the given item to a Unicode string.</doc>
+<msg timestamp="20230208 12:24:46.010" level="INFO">${avatar} = https://reqres.in/img/faces/4-image.jpg</msg>
+<status status="PASS" starttime="20230208 12:24:46.009" endtime="20230208 12:24:46.010"/>
+</kw>
+<if>
+<branch type="IF" condition="$email == &quot;janet.weaver@reqres.in&quot; and $first_name == &quot;Janet&quot; and $last_name == &quot;Weaver&quot; and $avatar == &quot;https://reqres.in/img/faces/2-image.jpg&quot;">
+<kw name="Log To Console" library="BuiltIn">
+<arg>"User with the necessary information exists"</arg>
+<arg>BREAK</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="NOT RUN" starttime="20230208 12:24:46.010" endtime="20230208 12:24:46.010"/>
+</kw>
+<status status="NOT RUN" starttime="20230208 12:24:46.010" endtime="20230208 12:24:46.010"/>
+</branch>
+<status status="PASS" starttime="20230208 12:24:46.010" endtime="20230208 12:24:46.010"/>
+</if>
+<status status="PASS" starttime="20230208 12:24:46.008" endtime="20230208 12:24:46.010"/>
+</iter>
+<iter>
+<var name="${user}">{'id': 5, 'email': 'charles.morris@reqres.in', 'first_name': 'Charles', 'last_name': 'Morris', 'avatar': 'https://reqres.in/img/faces/5-image.jpg'}</var>
+<kw name="Convert To String" library="BuiltIn">
+<var>${email}</var>
+<arg>${user['email']}</arg>
+<doc>Converts the given item to a Unicode string.</doc>
+<msg timestamp="20230208 12:24:46.011" level="INFO">${email} = charles.morris@reqres.in</msg>
+<status status="PASS" starttime="20230208 12:24:46.010" endtime="20230208 12:24:46.011"/>
+</kw>
+<kw name="Convert To String" library="BuiltIn">
+<var>${first_name}</var>
+<arg>${user['first_name']}</arg>
+<doc>Converts the given item to a Unicode string.</doc>
+<msg timestamp="20230208 12:24:46.011" level="INFO">${first_name} = Charles</msg>
+<status status="PASS" starttime="20230208 12:24:46.011" endtime="20230208 12:24:46.012"/>
+</kw>
+<kw name="Convert To String" library="BuiltIn">
+<var>${last_name}</var>
+<arg>${user['last_name']}</arg>
+<doc>Converts the given item to a Unicode string.</doc>
+<msg timestamp="20230208 12:24:46.012" level="INFO">${last_name} = Morris</msg>
+<status status="PASS" starttime="20230208 12:24:46.012" endtime="20230208 12:24:46.012"/>
+</kw>
+<kw name="Convert To String" library="BuiltIn">
+<var>${avatar}</var>
+<arg>${user['avatar']}</arg>
+<doc>Converts the given item to a Unicode string.</doc>
+<msg timestamp="20230208 12:24:46.013" level="INFO">${avatar} = https://reqres.in/img/faces/5-image.jpg</msg>
+<status status="PASS" starttime="20230208 12:24:46.012" endtime="20230208 12:24:46.013"/>
+</kw>
+<if>
+<branch type="IF" condition="$email == &quot;janet.weaver@reqres.in&quot; and $first_name == &quot;Janet&quot; and $last_name == &quot;Weaver&quot; and $avatar == &quot;https://reqres.in/img/faces/2-image.jpg&quot;">
+<kw name="Log To Console" library="BuiltIn">
+<arg>"User with the necessary information exists"</arg>
+<arg>BREAK</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="NOT RUN" starttime="20230208 12:24:46.013" endtime="20230208 12:24:46.013"/>
+</kw>
+<status status="NOT RUN" starttime="20230208 12:24:46.013" endtime="20230208 12:24:46.013"/>
+</branch>
+<status status="PASS" starttime="20230208 12:24:46.013" endtime="20230208 12:24:46.013"/>
+</if>
+<status status="PASS" starttime="20230208 12:24:46.010" endtime="20230208 12:24:46.013"/>
+</iter>
+<iter>
+<var name="${user}">{'id': 6, 'email': 'tracey.ramos@reqres.in', 'first_name': 'Tracey', 'last_name': 'Ramos', 'avatar': 'https://reqres.in/img/faces/6-image.jpg'}</var>
+<kw name="Convert To String" library="BuiltIn">
+<var>${email}</var>
+<arg>${user['email']}</arg>
+<doc>Converts the given item to a Unicode string.</doc>
+<msg timestamp="20230208 12:24:46.014" level="INFO">${email} = tracey.ramos@reqres.in</msg>
+<status status="PASS" starttime="20230208 12:24:46.013" endtime="20230208 12:24:46.014"/>
+</kw>
+<kw name="Convert To String" library="BuiltIn">
+<var>${first_name}</var>
+<arg>${user['first_name']}</arg>
+<doc>Converts the given item to a Unicode string.</doc>
+<msg timestamp="20230208 12:24:46.014" level="INFO">${first_name} = Tracey</msg>
+<status status="PASS" starttime="20230208 12:24:46.014" endtime="20230208 12:24:46.014"/>
+</kw>
+<kw name="Convert To String" library="BuiltIn">
+<var>${last_name}</var>
+<arg>${user['last_name']}</arg>
+<doc>Converts the given item to a Unicode string.</doc>
+<msg timestamp="20230208 12:24:46.015" level="INFO">${last_name} = Ramos</msg>
+<status status="PASS" starttime="20230208 12:24:46.014" endtime="20230208 12:24:46.015"/>
+</kw>
+<kw name="Convert To String" library="BuiltIn">
+<var>${avatar}</var>
+<arg>${user['avatar']}</arg>
+<doc>Converts the given item to a Unicode string.</doc>
+<msg timestamp="20230208 12:24:46.015" level="INFO">${avatar} = https://reqres.in/img/faces/6-image.jpg</msg>
+<status status="PASS" starttime="20230208 12:24:46.015" endtime="20230208 12:24:46.015"/>
+</kw>
+<if>
+<branch type="IF" condition="$email == &quot;janet.weaver@reqres.in&quot; and $first_name == &quot;Janet&quot; and $last_name == &quot;Weaver&quot; and $avatar == &quot;https://reqres.in/img/faces/2-image.jpg&quot;">
+<kw name="Log To Console" library="BuiltIn">
+<arg>"User with the necessary information exists"</arg>
+<arg>BREAK</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="NOT RUN" starttime="20230208 12:24:46.016" endtime="20230208 12:24:46.016"/>
+</kw>
+<status status="NOT RUN" starttime="20230208 12:24:46.016" endtime="20230208 12:24:46.016"/>
+</branch>
+<status status="PASS" starttime="20230208 12:24:46.015" endtime="20230208 12:24:46.016"/>
+</if>
+<status status="PASS" starttime="20230208 12:24:46.013" endtime="20230208 12:24:46.016"/>
+</iter>
+<status status="PASS" starttime="20230208 12:24:45.996" endtime="20230208 12:24:46.016"/>
+</for>
+<doc>First test case</doc>
+<tag>First</tag>
+<status status="PASS" starttime="20230208 12:24:45.701" endtime="20230208 12:24:46.016"/>
+</test>
+<test id="s1-s1-t2" name="Scenario 2" line="37">
+<kw name="Create Session" library="RequestsLibrary">
+<arg>mysession</arg>
+<arg>https://reqres.in</arg>
+<arg>verify=true</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20230208 12:24:46.017" level="INFO">Creating Session using : alias=mysession, url=https://reqres.in, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=True,                     debug=0 </msg>
+<status status="PASS" starttime="20230208 12:24:46.017" endtime="20230208 12:24:46.017"/>
+</kw>
+<kw name="GET On Session" library="RequestsLibrary">
+<var>${response}</var>
+<arg>mysession</arg>
+<arg>/api/users</arg>
+<arg>params=page=2</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<msg timestamp="20230208 12:24:46.236" level="INFO">GET Request : url=https://reqres.in/api/users?page=2 
+ path_url=/api/users?page=2 
+ headers={'User-Agent': 'python-requests/2.28.2', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg timestamp="20230208 12:24:46.236" level="INFO">GET Response : url=https://reqres.in/api/users?page=2 
+ status=200, reason=OK 
+ headers={'Date': 'Wed, 08 Feb 2023 08:24:46 GMT', 'Content-Type': 'application/json; charset=utf-8', 'Transfer-Encoding': 'chunked', 'Connection': 'keep-alive', 'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Etag': 'W/"406-ut0vzoCuidvyMf8arZpMpJ6ZRDw"', 'Via': '1.1 vegur', 'Cache-Control': 'max-age=14400', 'CF-Cache-Status': 'HIT', 'Age': '5806', 'Report-To': '{"endpoints":[{"url":"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=ODGorvxh5b0rwREADsUy0ESgAfsw317uPXomD%2FHtTZAF%2BnWWM742U9qM028zxBCBt7E3LxhfRQs0sbWXmZSW5HccmGqglSvcOw6cPU5gcCN7WXlsXXFbUqpdWA%3D%3D"}],"group":"cf-nel","max_age":604800}', 'NEL': '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}', 'Vary': 'Accept-Encoding', 'Server': 'cloudflare', 'CF-RAY': '7962f888bfe2914c-FRA', 'Content-Encoding': 'gzip'} 
+ body={"page":2,"per_page":6,"total":12,"total_pages":2,"data":[{"id":7,"email":"michael.lawson@reqres.in","first_name":"Michael","last_name":"Lawson","avatar":"https://reqres.in/img/faces/7-image.jpg"},{"id":8,"email":"lindsay.ferguson@reqres.in","first_name":"Lindsay","last_name":"Ferguson","avatar":"https://reqres.in/img/faces/8-image.jpg"},{"id":9,"email":"tobias.funke@reqres.in","first_name":"Tobias","last_name":"Funke","avatar":"https://reqres.in/img/faces/9-image.jpg"},{"id":10,"email":"byron.fields@reqres.in","first_name":"Byron","last_name":"Fields","avatar":"https://reqres.in/img/faces/10-image.jpg"},{"id":11,"email":"george.edwards@reqres.in","first_name":"George","last_name":"Edwards","avatar":"https://reqres.in/img/faces/11-image.jpg"},{"id":12,"email":"rachel.howell@reqres.in","first_name":"Rachel","last_name":"Howell","avatar":"https://reqres.in/img/faces/12-image.jpg"}],"support":{"url":"https://reqres.in/#support-heading","text":"To keep ReqRes free, contributions towards server costs are appreciated!"}} 
+ </msg>
+<msg timestamp="20230208 12:24:46.237" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230208 12:24:46.017" endtime="20230208 12:24:46.237"/>
+</kw>
+<kw name="Status Should Be" library="RequestsLibrary">
+<arg>200</arg>
+<arg>${response}</arg>
+<doc>Fails if response status code is different than the expected.</doc>
+<status status="PASS" starttime="20230208 12:24:46.237" endtime="20230208 12:24:46.238"/>
+</kw>
+<kw name="Get Value From Json" library="JSONLibrary">
+<var>${per_page}</var>
+<arg>${response.json()}</arg>
+<arg>per_page</arg>
+<doc>Get Value From JSON using JSONPath</doc>
+<msg timestamp="20230208 12:24:46.279" level="INFO">${per_page} = [6]</msg>
+<status status="PASS" starttime="20230208 12:24:46.239" endtime="20230208 12:24:46.279"/>
+</kw>
+<kw name="Get From List" library="Collections">
+<var>${per_pageFromList}</var>
+<arg>${per_page}</arg>
+<arg>0</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<msg timestamp="20230208 12:24:46.280" level="INFO">${per_pageFromList} = 6</msg>
+<status status="PASS" starttime="20230208 12:24:46.279" endtime="20230208 12:24:46.280"/>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>${per_pageFromList}</arg>
+<arg>${6}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" starttime="20230208 12:24:46.280" endtime="20230208 12:24:46.280"/>
+</kw>
+<kw name="Get Value From Json" library="JSONLibrary">
+<var>${page}</var>
+<arg>${response.json()}</arg>
+<arg>page</arg>
+<doc>Get Value From JSON using JSONPath</doc>
+<msg timestamp="20230208 12:24:46.297" level="INFO">${page} = [2]</msg>
+<status status="PASS" starttime="20230208 12:24:46.281" endtime="20230208 12:24:46.297"/>
+</kw>
+<kw name="Get From List" library="Collections">
+<var>${pageFromList}</var>
+<arg>${page}</arg>
+<arg>0</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<msg timestamp="20230208 12:24:46.298" level="INFO">${pageFromList} = 2</msg>
+<status status="PASS" starttime="20230208 12:24:46.297" endtime="20230208 12:24:46.298"/>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>${pageFromList}</arg>
+<arg>${2}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" starttime="20230208 12:24:46.298" endtime="20230208 12:24:46.298"/>
+</kw>
+<for flavor="IN">
+<var>${user}</var>
+<value>@{response.json()['data']}</value>
+<iter>
+<var name="${user}">{'id': 7, 'email': 'michael.lawson@reqres.in', 'first_name': 'Michael', 'last_name': 'Lawson', 'avatar': 'https://reqres.in/img/faces/7-image.jpg'}</var>
+<kw name="Convert To String" library="BuiltIn">
+<var>${email}</var>
+<arg>${user['email']}</arg>
+<doc>Converts the given item to a Unicode string.</doc>
+<msg timestamp="20230208 12:24:46.299" level="INFO">${email} = michael.lawson@reqres.in</msg>
+<status status="PASS" starttime="20230208 12:24:46.299" endtime="20230208 12:24:46.299"/>
+</kw>
+<kw name="Convert To String" library="BuiltIn">
+<var>${first_name}</var>
+<arg>${user['first_name']}</arg>
+<doc>Converts the given item to a Unicode string.</doc>
+<msg timestamp="20230208 12:24:46.300" level="INFO">${first_name} = Michael</msg>
+<status status="PASS" starttime="20230208 12:24:46.299" endtime="20230208 12:24:46.300"/>
+</kw>
+<kw name="Convert To String" library="BuiltIn">
+<var>${last_name}</var>
+<arg>${user['last_name']}</arg>
+<doc>Converts the given item to a Unicode string.</doc>
+<msg timestamp="20230208 12:24:46.300" level="INFO">${last_name} = Lawson</msg>
+<status status="PASS" starttime="20230208 12:24:46.300" endtime="20230208 12:24:46.300"/>
+</kw>
+<kw name="Convert To String" library="BuiltIn">
+<var>${avatar}</var>
+<arg>${user['avatar']}</arg>
+<doc>Converts the given item to a Unicode string.</doc>
+<msg timestamp="20230208 12:24:46.301" level="INFO">${avatar} = https://reqres.in/img/faces/7-image.jpg</msg>
+<status status="PASS" starttime="20230208 12:24:46.301" endtime="20230208 12:24:46.301"/>
+</kw>
+<if>
+<branch type="IF" condition="$email == &quot;byron.fields@reqres.in&quot; and $first_name == &quot;Byron&quot; and $last_name == &quot;Fields&quot; and $avatar == &quot;https://reqres.in/img/faces/10-image.jpg&quot;">
+<kw name="Log To Console" library="BuiltIn">
+<arg>"User with the necessary information exists"</arg>
+<arg>BREAK</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="NOT RUN" starttime="20230208 12:24:46.301" endtime="20230208 12:24:46.301"/>
+</kw>
+<status status="NOT RUN" starttime="20230208 12:24:46.301" endtime="20230208 12:24:46.301"/>
+</branch>
+<status status="PASS" starttime="20230208 12:24:46.301" endtime="20230208 12:24:46.301"/>
+</if>
+<status status="PASS" starttime="20230208 12:24:46.299" endtime="20230208 12:24:46.301"/>
+</iter>
+<iter>
+<var name="${user}">{'id': 8, 'email': 'lindsay.ferguson@reqres.in', 'first_name': 'Lindsay', 'last_name': 'Ferguson', 'avatar': 'https://reqres.in/img/faces/8-image.jpg'}</var>
+<kw name="Convert To String" library="BuiltIn">
+<var>${email}</var>
+<arg>${user['email']}</arg>
+<doc>Converts the given item to a Unicode string.</doc>
+<msg timestamp="20230208 12:24:46.302" level="INFO">${email} = lindsay.ferguson@reqres.in</msg>
+<status status="PASS" starttime="20230208 12:24:46.302" endtime="20230208 12:24:46.302"/>
+</kw>
+<kw name="Convert To String" library="BuiltIn">
+<var>${first_name}</var>
+<arg>${user['first_name']}</arg>
+<doc>Converts the given item to a Unicode string.</doc>
+<msg timestamp="20230208 12:24:46.303" level="INFO">${first_name} = Lindsay</msg>
+<status status="PASS" starttime="20230208 12:24:46.302" endtime="20230208 12:24:46.303"/>
+</kw>
+<kw name="Convert To String" library="BuiltIn">
+<var>${last_name}</var>
+<arg>${user['last_name']}</arg>
+<doc>Converts the given item to a Unicode string.</doc>
+<msg timestamp="20230208 12:24:46.303" level="INFO">${last_name} = Ferguson</msg>
+<status status="PASS" starttime="20230208 12:24:46.303" endtime="20230208 12:24:46.303"/>
+</kw>
+<kw name="Convert To String" library="BuiltIn">
+<var>${avatar}</var>
+<arg>${user['avatar']}</arg>
+<doc>Converts the given item to a Unicode string.</doc>
+<msg timestamp="20230208 12:24:46.304" level="INFO">${avatar} = https://reqres.in/img/faces/8-image.jpg</msg>
+<status status="PASS" starttime="20230208 12:24:46.303" endtime="20230208 12:24:46.304"/>
+</kw>
+<if>
+<branch type="IF" condition="$email == &quot;byron.fields@reqres.in&quot; and $first_name == &quot;Byron&quot; and $last_name == &quot;Fields&quot; and $avatar == &quot;https://reqres.in/img/faces/10-image.jpg&quot;">
+<kw name="Log To Console" library="BuiltIn">
+<arg>"User with the necessary information exists"</arg>
+<arg>BREAK</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="NOT RUN" starttime="20230208 12:24:46.304" endtime="20230208 12:24:46.304"/>
+</kw>
+<status status="NOT RUN" starttime="20230208 12:24:46.304" endtime="20230208 12:24:46.304"/>
+</branch>
+<status status="PASS" starttime="20230208 12:24:46.304" endtime="20230208 12:24:46.304"/>
+</if>
+<status status="PASS" starttime="20230208 12:24:46.302" endtime="20230208 12:24:46.304"/>
+</iter>
+<iter>
+<var name="${user}">{'id': 9, 'email': 'tobias.funke@reqres.in', 'first_name': 'Tobias', 'last_name': 'Funke', 'avatar': 'https://reqres.in/img/faces/9-image.jpg'}</var>
+<kw name="Convert To String" library="BuiltIn">
+<var>${email}</var>
+<arg>${user['email']}</arg>
+<doc>Converts the given item to a Unicode string.</doc>
+<msg timestamp="20230208 12:24:46.305" level="INFO">${email} = tobias.funke@reqres.in</msg>
+<status status="PASS" starttime="20230208 12:24:46.305" endtime="20230208 12:24:46.305"/>
+</kw>
+<kw name="Convert To String" library="BuiltIn">
+<var>${first_name}</var>
+<arg>${user['first_name']}</arg>
+<doc>Converts the given item to a Unicode string.</doc>
+<msg timestamp="20230208 12:24:46.306" level="INFO">${first_name} = Tobias</msg>
+<status status="PASS" starttime="20230208 12:24:46.305" endtime="20230208 12:24:46.306"/>
+</kw>
+<kw name="Convert To String" library="BuiltIn">
+<var>${last_name}</var>
+<arg>${user['last_name']}</arg>
+<doc>Converts the given item to a Unicode string.</doc>
+<msg timestamp="20230208 12:24:46.306" level="INFO">${last_name} = Funke</msg>
+<status status="PASS" starttime="20230208 12:24:46.306" endtime="20230208 12:24:46.306"/>
+</kw>
+<kw name="Convert To String" library="BuiltIn">
+<var>${avatar}</var>
+<arg>${user['avatar']}</arg>
+<doc>Converts the given item to a Unicode string.</doc>
+<msg timestamp="20230208 12:24:46.307" level="INFO">${avatar} = https://reqres.in/img/faces/9-image.jpg</msg>
+<status status="PASS" starttime="20230208 12:24:46.306" endtime="20230208 12:24:46.307"/>
+</kw>
+<if>
+<branch type="IF" condition="$email == &quot;byron.fields@reqres.in&quot; and $first_name == &quot;Byron&quot; and $last_name == &quot;Fields&quot; and $avatar == &quot;https://reqres.in/img/faces/10-image.jpg&quot;">
+<kw name="Log To Console" library="BuiltIn">
+<arg>"User with the necessary information exists"</arg>
+<arg>BREAK</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="NOT RUN" starttime="20230208 12:24:46.307" endtime="20230208 12:24:46.307"/>
+</kw>
+<status status="NOT RUN" starttime="20230208 12:24:46.307" endtime="20230208 12:24:46.307"/>
+</branch>
+<status status="PASS" starttime="20230208 12:24:46.307" endtime="20230208 12:24:46.307"/>
+</if>
+<status status="PASS" starttime="20230208 12:24:46.304" endtime="20230208 12:24:46.307"/>
+</iter>
+<iter>
+<var name="${user}">{'id': 10, 'email': 'byron.fields@reqres.in', 'first_name': 'Byron', 'last_name': 'Fields', 'avatar': 'https://reqres.in/img/faces/10-image.jpg'}</var>
+<kw name="Convert To String" library="BuiltIn">
+<var>${email}</var>
+<arg>${user['email']}</arg>
+<doc>Converts the given item to a Unicode string.</doc>
+<msg timestamp="20230208 12:24:46.308" level="INFO">${email} = byron.fields@reqres.in</msg>
+<status status="PASS" starttime="20230208 12:24:46.307" endtime="20230208 12:24:46.308"/>
+</kw>
+<kw name="Convert To String" library="BuiltIn">
+<var>${first_name}</var>
+<arg>${user['first_name']}</arg>
+<doc>Converts the given item to a Unicode string.</doc>
+<msg timestamp="20230208 12:24:46.308" level="INFO">${first_name} = Byron</msg>
+<status status="PASS" starttime="20230208 12:24:46.308" endtime="20230208 12:24:46.308"/>
+</kw>
+<kw name="Convert To String" library="BuiltIn">
+<var>${last_name}</var>
+<arg>${user['last_name']}</arg>
+<doc>Converts the given item to a Unicode string.</doc>
+<msg timestamp="20230208 12:24:46.309" level="INFO">${last_name} = Fields</msg>
+<status status="PASS" starttime="20230208 12:24:46.308" endtime="20230208 12:24:46.309"/>
+</kw>
+<kw name="Convert To String" library="BuiltIn">
+<var>${avatar}</var>
+<arg>${user['avatar']}</arg>
+<doc>Converts the given item to a Unicode string.</doc>
+<msg timestamp="20230208 12:24:46.310" level="INFO">${avatar} = https://reqres.in/img/faces/10-image.jpg</msg>
+<status status="PASS" starttime="20230208 12:24:46.309" endtime="20230208 12:24:46.310"/>
+</kw>
+<if>
+<branch type="IF" condition="$email == &quot;byron.fields@reqres.in&quot; and $first_name == &quot;Byron&quot; and $last_name == &quot;Fields&quot; and $avatar == &quot;https://reqres.in/img/faces/10-image.jpg&quot;">
+<kw name="Log To Console" library="BuiltIn">
+<arg>"User with the necessary information exists"</arg>
+<arg>BREAK</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20230208 12:24:46.310" endtime="20230208 12:24:46.310"/>
+</kw>
+<status status="PASS" starttime="20230208 12:24:46.310" endtime="20230208 12:24:46.310"/>
+</branch>
+<status status="PASS" starttime="20230208 12:24:46.310" endtime="20230208 12:24:46.310"/>
+</if>
+<status status="PASS" starttime="20230208 12:24:46.307" endtime="20230208 12:24:46.310"/>
+</iter>
+<iter>
+<var name="${user}">{'id': 11, 'email': 'george.edwards@reqres.in', 'first_name': 'George', 'last_name': 'Edwards', 'avatar': 'https://reqres.in/img/faces/11-image.jpg'}</var>
+<kw name="Convert To String" library="BuiltIn">
+<var>${email}</var>
+<arg>${user['email']}</arg>
+<doc>Converts the given item to a Unicode string.</doc>
+<msg timestamp="20230208 12:24:46.311" level="INFO">${email} = george.edwards@reqres.in</msg>
+<status status="PASS" starttime="20230208 12:24:46.310" endtime="20230208 12:24:46.311"/>
+</kw>
+<kw name="Convert To String" library="BuiltIn">
+<var>${first_name}</var>
+<arg>${user['first_name']}</arg>
+<doc>Converts the given item to a Unicode string.</doc>
+<msg timestamp="20230208 12:24:46.311" level="INFO">${first_name} = George</msg>
+<status status="PASS" starttime="20230208 12:24:46.311" endtime="20230208 12:24:46.311"/>
+</kw>
+<kw name="Convert To String" library="BuiltIn">
+<var>${last_name}</var>
+<arg>${user['last_name']}</arg>
+<doc>Converts the given item to a Unicode string.</doc>
+<msg timestamp="20230208 12:24:46.312" level="INFO">${last_name} = Edwards</msg>
+<status status="PASS" starttime="20230208 12:24:46.311" endtime="20230208 12:24:46.312"/>
+</kw>
+<kw name="Convert To String" library="BuiltIn">
+<var>${avatar}</var>
+<arg>${user['avatar']}</arg>
+<doc>Converts the given item to a Unicode string.</doc>
+<msg timestamp="20230208 12:24:46.313" level="INFO">${avatar} = https://reqres.in/img/faces/11-image.jpg</msg>
+<status status="PASS" starttime="20230208 12:24:46.312" endtime="20230208 12:24:46.313"/>
+</kw>
+<if>
+<branch type="IF" condition="$email == &quot;byron.fields@reqres.in&quot; and $first_name == &quot;Byron&quot; and $last_name == &quot;Fields&quot; and $avatar == &quot;https://reqres.in/img/faces/10-image.jpg&quot;">
+<kw name="Log To Console" library="BuiltIn">
+<arg>"User with the necessary information exists"</arg>
+<arg>BREAK</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="NOT RUN" starttime="20230208 12:24:46.313" endtime="20230208 12:24:46.313"/>
+</kw>
+<status status="NOT RUN" starttime="20230208 12:24:46.313" endtime="20230208 12:24:46.313"/>
+</branch>
+<status status="PASS" starttime="20230208 12:24:46.313" endtime="20230208 12:24:46.313"/>
+</if>
+<status status="PASS" starttime="20230208 12:24:46.310" endtime="20230208 12:24:46.313"/>
+</iter>
+<iter>
+<var name="${user}">{'id': 12, 'email': 'rachel.howell@reqres.in', 'first_name': 'Rachel', 'last_name': 'Howell', 'avatar': 'https://reqres.in/img/faces/12-image.jpg'}</var>
+<kw name="Convert To String" library="BuiltIn">
+<var>${email}</var>
+<arg>${user['email']}</arg>
+<doc>Converts the given item to a Unicode string.</doc>
+<msg timestamp="20230208 12:24:46.314" level="INFO">${email} = rachel.howell@reqres.in</msg>
+<status status="PASS" starttime="20230208 12:24:46.313" endtime="20230208 12:24:46.314"/>
+</kw>
+<kw name="Convert To String" library="BuiltIn">
+<var>${first_name}</var>
+<arg>${user['first_name']}</arg>
+<doc>Converts the given item to a Unicode string.</doc>
+<msg timestamp="20230208 12:24:46.314" level="INFO">${first_name} = Rachel</msg>
+<status status="PASS" starttime="20230208 12:24:46.314" endtime="20230208 12:24:46.314"/>
+</kw>
+<kw name="Convert To String" library="BuiltIn">
+<var>${last_name}</var>
+<arg>${user['last_name']}</arg>
+<doc>Converts the given item to a Unicode string.</doc>
+<msg timestamp="20230208 12:24:46.315" level="INFO">${last_name} = Howell</msg>
+<status status="PASS" starttime="20230208 12:24:46.314" endtime="20230208 12:24:46.315"/>
+</kw>
+<kw name="Convert To String" library="BuiltIn">
+<var>${avatar}</var>
+<arg>${user['avatar']}</arg>
+<doc>Converts the given item to a Unicode string.</doc>
+<msg timestamp="20230208 12:24:46.315" level="INFO">${avatar} = https://reqres.in/img/faces/12-image.jpg</msg>
+<status status="PASS" starttime="20230208 12:24:46.315" endtime="20230208 12:24:46.315"/>
+</kw>
+<if>
+<branch type="IF" condition="$email == &quot;byron.fields@reqres.in&quot; and $first_name == &quot;Byron&quot; and $last_name == &quot;Fields&quot; and $avatar == &quot;https://reqres.in/img/faces/10-image.jpg&quot;">
+<kw name="Log To Console" library="BuiltIn">
+<arg>"User with the necessary information exists"</arg>
+<arg>BREAK</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="NOT RUN" starttime="20230208 12:24:46.316" endtime="20230208 12:24:46.316"/>
+</kw>
+<status status="NOT RUN" starttime="20230208 12:24:46.315" endtime="20230208 12:24:46.316"/>
+</branch>
+<status status="PASS" starttime="20230208 12:24:46.315" endtime="20230208 12:24:46.316"/>
+</if>
+<status status="PASS" starttime="20230208 12:24:46.313" endtime="20230208 12:24:46.316"/>
+</iter>
+<status status="PASS" starttime="20230208 12:24:46.298" endtime="20230208 12:24:46.316"/>
+</for>
+<doc>Second test case</doc>
+<tag>Second</tag>
+<status status="PASS" starttime="20230208 12:24:46.016" endtime="20230208 12:24:46.316"/>
+</test>
+<test id="s1-s1-t3" name="Scenario 3" line="64">
+<kw name="Create Session" library="RequestsLibrary">
+<arg>mysession</arg>
+<arg>https://reqres.in</arg>
+<arg>verify=true</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20230208 12:24:46.317" level="INFO">Creating Session using : alias=mysession, url=https://reqres.in, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=True,                     debug=0 </msg>
+<status status="PASS" starttime="20230208 12:24:46.317" endtime="20230208 12:24:46.317"/>
+</kw>
+<kw name="GET On Session" library="RequestsLibrary">
+<var>${response}</var>
+<arg>mysession</arg>
+<arg>/api/users</arg>
+<arg>params=page=12</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<msg timestamp="20230208 12:24:46.596" level="INFO">GET Request : url=https://reqres.in/api/users?page=12 
+ path_url=/api/users?page=12 
+ headers={'User-Agent': 'python-requests/2.28.2', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg timestamp="20230208 12:24:46.597" level="INFO">GET Response : url=https://reqres.in/api/users?page=12 
+ status=200, reason=OK 
+ headers={'Date': 'Wed, 08 Feb 2023 08:24:46 GMT', 'Content-Type': 'application/json; charset=utf-8', 'Transfer-Encoding': 'chunked', 'Connection': 'keep-alive', 'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Etag': 'W/"c6-KBTaTjVMPPDlkMfFq4scWGklStc"', 'Via': '1.1 vegur', 'Cache-Control': 'max-age=14400', 'CF-Cache-Status': 'REVALIDATED', 'Report-To': '{"endpoints":[{"url":"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=LE6zr0zw1W5XUpKC0mb0NWBjgwWjv6%2BjCOF%2Bcl1cZ%2FqzTrE9%2B8FD%2FSKmOjtYYQ0wgnoVttykkQLFD9wJDrWgwEjR%2BY%2FXbraLhHr%2FVZANaR4CYDzo7rA13IjXvA%3D%3D"}],"group":"cf-nel","max_age":604800}', 'NEL': '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}', 'Vary': 'Accept-Encoding', 'Server': 'cloudflare', 'CF-RAY': '7962f88a9d82381a-FRA', 'Content-Encoding': 'gzip'} 
+ body={"page":12,"per_page":6,"total":12,"total_pages":2,"data":[],"support":{"url":"https://reqres.in/#support-heading","text":"To keep ReqRes free, contributions towards server costs are appreciated!"}} 
+ </msg>
+<msg timestamp="20230208 12:24:46.597" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230208 12:24:46.317" endtime="20230208 12:24:46.597"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${response.content}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20230208 12:24:46.598" endtime="20230208 12:24:46.600"/>
+</kw>
+<doc>Second test case</doc>
+<tag>Second</tag>
+<status status="PASS" starttime="20230208 12:24:46.316" endtime="20230208 12:24:46.601"/>
+</test>
+<status status="PASS" starttime="20230208 12:24:45.533" endtime="20230208 12:24:46.602"/>
+</suite>
+<status status="PASS" starttime="20230208 12:24:45.518" endtime="20230208 12:24:46.606"/>
+</suite>
+<statistics>
+<total>
+<stat pass="3" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+<stat pass="1" fail="0" skip="0">First</stat>
+<stat pass="2" fail="0" skip="0">Second</stat>
+</tag>
+<suite>
+<stat pass="3" fail="0" skip="0" id="s1" name="API testing">API testing</stat>
+<stat pass="3" fail="0" skip="0" id="s1-s1" name="ApiTesting">API testing.ApiTesting</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
